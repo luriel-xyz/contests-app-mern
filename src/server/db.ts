@@ -32,6 +32,6 @@ export const connectClient = async () => {
 export const stopClient = async () => {
   if (connectedClient) {
     await connectedClient.close();
-    console.log("Connection closed");
+    console.info("Connection closed");
   }
 };
