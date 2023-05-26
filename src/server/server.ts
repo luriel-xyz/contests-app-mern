@@ -11,8 +11,8 @@ app.set("view engine", "ejs");
 
 app.use("/api", apiRouter);
 
-app.get("/", async (req: Request, res: Response) => {
-  const { initialMarkup, initialData } = await serverRender();
+app.get(["/", "/contests/:contestId"], async (req: Request, res: Response) => {
+  const { initialMarkup, initialData } = await serverRender(req);
 
   res.render("index", { initialMarkup, initialData });
 });

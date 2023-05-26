@@ -1,20 +1,33 @@
 import React, { useState, useEffect } from "react";
+import Header from "./Header";
 import ContestPreview from "./ContestPreview";
 import { fetchContests } from "../api-client";
 
-const ContestList: React.FC = ({ initialContests }) => {
-  const [contests, setContests] = useState(initialContests);
+const ContestList: React.FC = ({ initialContests, onContestClick }) => {
+  const [contests, setContests] = useState(initialContests ?? []);
 
-  // useEffect(() => {
-  //   fetchContests().then((contests) => setContests(contests));
-  // }, []);
+  useEffect(() => {
+    if (!initialContests) {
+      fetchContests()
+        .then((contests) => setContests(contests))
+        .catch(console.error);
+    }
+  }, [initialContests]);
 
   return (
-    <div className="contest-list">
-      {contests.map((contest) => (
-        <ContestPreview key={contest.id} contest={contest} />
-      ))}
-    </div>
+    <>
+      <Header message="Naming Contests" />
+
+      <div className="contest-list">
+        {contests.map((contest) => (
+          <ContestPreview
+            key={contest.id}
+            contest={contest}
+            onClick={onContestClick}
+          />
+        ))}
+      </div>
+    </>
   );
 };
 
