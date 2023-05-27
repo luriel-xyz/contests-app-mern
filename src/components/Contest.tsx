@@ -1,3 +1,12 @@
+/**
+ * Contest Component
+ *
+ * This component represents a contest page. It displays the contest details,
+ * including the category, contest name, description, and provides a link
+ * to navigate back to the contest list. It fetches the contest data from
+ * the server if it is not already available.
+ */
+
 import React, { useState, useEffect } from "react";
 import Header from "./Header";
 import { fetchContest } from "../api-client";
@@ -8,6 +17,13 @@ type ContestType = {
   contestName: string;
 };
 
+/**
+ * Contest Component
+ *
+ * @param {Object} initialContest - The initial contest data.
+ * @param {Function} onClickContestList - The function to call when clicking the contest list link.
+ * @returns {JSX.Element} - The rendered component.
+ */
 const Contest: React.FC = ({ initialContest, onClickContestList }) => {
   const [contest, setContest] = useState<ContestType>(initialContest);
   const [loading, setLoading] = useState<boolean>(false);
@@ -22,9 +38,15 @@ const Contest: React.FC = ({ initialContest, onClickContestList }) => {
     }
   }, [contest.id, contest.names]);
 
+  /**
+   * handleClickContestList
+   *
+   * Handles the click event on the contest list link.
+   *
+   * @param {Event} e - The click event.
+   */
   const handleClickContestList = (e) => {
     e.preventDefault();
-
     onClickContestList();
   };
 

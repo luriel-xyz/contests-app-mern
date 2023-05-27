@@ -1,26 +1,38 @@
+/**
+ * Server Render
+ *
+ * This module is responsible for rendering the initial markup
+ * on the server side using ReactDOMServer. It fetches the
+ * required data from the API and passes it as initial props
+ * to the React App component.
+ */
+
 import ReactDOMServer from "react-dom/server";
 import { fetchContest, fetchContests } from "../api-client";
 import App from "../components/App";
 
 /**
- * Asynchronous function for server-side rendering.
- * Fetches contest data from the API and renders the App component with the initial data.
- * @returns {string} The initial markup of the application.
+ * serverRender
+ *
+ * Renders the initial markup on the server side.
+ *
+ * @param {Object} req - The request object.
+ * @returns {Object} - An object containing the initial markup and initial data.
  */
 const serverRender = async (req) => {
+  // Extract contestId from request parameters
   const { contestId } = req.params;
 
-  // Fetch contests data from the API
+  // Fetch initial data based on the presence of contestId
   const initialData = contestId
     ? { contest: await fetchContest(contestId) }
     : { contests: await fetchContests() };
 
-  // Render the App component with initial data
+  // Render the initial markup using ReactDOMServer
   const initialMarkup = ReactDOMServer.renderToString(
     <App initialData={initialData} />
   );
 
-  // Return the initial markup and data to be used by the server
   return { initialMarkup, initialData };
 };
 
