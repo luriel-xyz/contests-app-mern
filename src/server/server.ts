@@ -19,6 +19,8 @@ app.use(express.static("dist"));
 // Set the view engine to EJS
 app.set("view engine", "ejs");
 
+app.use(express.json());
+
 // API routes
 app.use("/api", apiRouter);
 

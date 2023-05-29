@@ -11,6 +11,7 @@
 import React, { useState, useEffect } from "react";
 import ContestList from "./ContestList";
 import Contest from "./Contest";
+import AddNewContest from "./AddNewContest";
 
 type Page = "contestList" | "contest";
 
@@ -69,21 +70,35 @@ const App: React.FC = ({ initialData }) => {
     setPage(contestListPage);
   };
 
+  const handleNewContest = (newContest) => {
+    window.history.pushState(
+      { contestId: newContest.id },
+      "",
+      `/contest/${newContest.id}`
+    );
+    setPage(contestPage);
+    setCurrentContest(newContest);
+    initialData.contests.push(newContest);
+  };
+
   /**
    * renderPageContent
    *
    * Renders the appropriate page content based on the current state.
    *
-   * @returns {JSX.Element|null} - The rendered page content.
+   * @returns {JSX.Element|undefined} - The rendered page content.
    */
   const renderPageContent = () => {
     switch (page) {
       case contestListPage:
         return (
-          <ContestList
-            initialContests={initialData.contests}
-            onContestClick={navigateToContest}
-          />
+          <>
+            <ContestList
+              initialContests={initialData.contests}
+              onContestClick={navigateToContest}
+            />
+            <AddNewContest onSuccess={handleNewContest} />
+          </>
         );
       case contestPage:
         return (
@@ -92,8 +107,6 @@ const App: React.FC = ({ initialData }) => {
             onClickContestList={navigateToContestsList}
           />
         );
-      default:
-        return null;
     }
   };
 

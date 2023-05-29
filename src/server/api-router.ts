@@ -48,4 +48,53 @@ router.get("/contests/:contestId", async (req: Request, res: Response) => {
   res.send({ contest });
 });
 
+router.post("/contests/:contestId", async (req: Request, res: Response) => {
+  // Extracting the contest ID from the request parameters
+  const id = req.params.contestId;
+
+  const { name } = req.body;
+
+  // Establishing a database connection
+  const client = await connectClient();
+
+  const doc = await client.collection("contests").findOneAndUpdate(
+    { id },
+    {
+      $push: {
+        names: {
+          id: name.toLowerCase().replace(/\s/g, "-"),
+          name: name,
+          timestamp: new Date(),
+        },
+      },
+    },
+    { returnDocument: "after" }
+  );
+
+  res.send({ updatedContest: doc.value });
+});
+
+router.post("/contests", async (req: Request, res: Response) => {
+  // Establishing a database connection
+  const client = await connectClient();
+
+  const { categoryName, contestName, description } = req.body;
+
+  const id: string = description.toLowerCase().replace(/\s/g, "-");
+
+  const doc = await client.collection("contests").insertOne({
+    id,
+    categoryName,
+    contestName,
+    description,
+    names: [],
+  });
+
+  const contest = await client
+    .collection("contests")
+    .findOne({ _id: doc.insertedId });
+
+  res.send({ contest });
+});
+
 export default router;

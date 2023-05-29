@@ -11,6 +11,12 @@ import React, { useState, useEffect } from "react";
 import Header from "./Header";
 import ContestPreview from "./ContestPreview";
 import { fetchContests } from "../api-client";
+import { ContestType } from "./Contest";
+
+interface IContestList {
+  initialContests: Array<ContestType>;
+  onContestClick: Function;
+}
 
 /**
  * ContestList Component
@@ -19,14 +25,22 @@ import { fetchContests } from "../api-client";
  * @param {Function} onContestClick - The function to call when a contest is clicked.
  * @returns {JSX.Element} - The rendered component.
  */
-const ContestList: React.FC = ({ initialContests, onContestClick }) => {
-  const [contests, setContests] = useState(initialContests ?? []);
+const ContestList: React.FC = ({
+  initialContests,
+  onContestClick,
+}: IContestList) => {
+  const [contests, setContests] = useState<Array<ContestType>>(
+    initialContests ?? []
+  );
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     if (!initialContests) {
+      setLoading(true);
       fetchContests()
-        .then((contests) => setContests(contests))
-        .catch(console.error);
+        .then(setContests)
+        .catch(console.error)
+        .finally(() => setLoading(false));
     }
   }, [initialContests]);
 
@@ -34,15 +48,19 @@ const ContestList: React.FC = ({ initialContests, onContestClick }) => {
     <>
       <Header message="Naming Contests" />
 
-      <div className="contest-list">
-        {contests.map((contest) => (
-          <ContestPreview
-            key={contest.id}
-            contest={contest}
-            onClick={onContestClick}
-          />
-        ))}
-      </div>
+      {loading ? (
+        <div className="title">{"Loading..."}</div>
+      ) : (
+        <div className="contest-list">
+          {contests.map((contest) => (
+            <ContestPreview
+              key={contest.id}
+              contest={contest}
+              onClick={onContestClick}
+            />
+          ))}
+        </div>
+      )}
     </>
   );
 };
