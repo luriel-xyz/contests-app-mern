@@ -1,10 +1,9 @@
 /**
  * ContestList Component
  *
- * This component represents a list of contests. It fetches the contest data
- * from the server if it is not provided as an initial prop. It renders a
- * header with the message "Naming Contests" and a list of ContestPreview
- * components for each contest in the contests array.
+ * This component represents a list of contests.
+ * It fetches the contests data from the server if it is not already available.
+ * It renders a header with a message and a list of contest previews.
  */
 
 import React, { useState, useEffect } from "react";
@@ -21,8 +20,8 @@ interface IContestList {
 /**
  * ContestList Component
  *
- * @param {Array} initialContests - The initial contests data.
- * @param {Function} onContestClick - The function to call when a contest is clicked.
+ * @param {Object} initialContests - The initial contests data.
+ * @param {Function} onContestClick - The function to call when clicking on a contest.
  * @returns {JSX.Element} - The rendered component.
  */
 const ContestList: React.FC = ({

@@ -10,7 +10,7 @@
 
 import React, { useState, useEffect } from "react";
 import ContestList from "./ContestList";
-import Contest from "./Contest";
+import Contest, { ContestType } from "./Contest";
 import AddNewContest from "./AddNewContest";
 
 type Page = "contestList" | "contest";
@@ -27,7 +27,10 @@ const App: React.FC = ({ initialData }) => {
   const [page, setPage] = useState<Page>(
     initialData.contest ? contestPage : contestListPage
   );
-  const [currentContest, setCurrentContest] = useState<object | undefined>(
+  const [contests, setContests] = useState<Array<ContestType> | undefined>(
+    initialData.contests
+  );
+  const [currentContest, setCurrentContest] = useState<ContestType | undefined>(
     initialData.contest
   );
 
@@ -70,6 +73,13 @@ const App: React.FC = ({ initialData }) => {
     setPage(contestListPage);
   };
 
+  /**
+   * handleNewContest
+   *
+   * Creates a new contest, updates the browser history, and navigates to the contest page.
+   *
+   * @param {Object} newContest - The new contest data.
+   */
   const handleNewContest = (newContest) => {
     window.history.pushState(
       { contestId: newContest.id },
@@ -78,7 +88,7 @@ const App: React.FC = ({ initialData }) => {
     );
     setPage(contestPage);
     setCurrentContest(newContest);
-    initialData.contests.push(newContest);
+    setContests([...contests, newContest]);
   };
 
   /**
@@ -94,7 +104,7 @@ const App: React.FC = ({ initialData }) => {
         return (
           <>
             <ContestList
-              initialContests={initialData.contests}
+              initialContests={contests}
               onContestClick={navigateToContest}
             />
             <AddNewContest onSuccess={handleNewContest} />

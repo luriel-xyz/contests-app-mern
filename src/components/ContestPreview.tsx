@@ -7,6 +7,12 @@
  */
 
 import React from "react";
+import { ContestType } from "./Contest";
+
+interface IContestPreview {
+  contest: ContestType;
+  onClick: Function;
+}
 
 /**
  * ContestPreview Component
@@ -15,7 +21,7 @@ import React from "react";
  * @param {Function} onClick - The function to call when the contest preview is clicked.
  * @returns {JSX.Element} - The rendered component.
  */
-const ContestPreview: React.FC = ({ contest, onClick }) => {
+const ContestPreview: React.FC = ({ contest, onClick }: IContestPreview) => {
   /**
    * handleClick
    *

@@ -30,14 +30,23 @@ export const fetchContests = async (): Promise<Array<ContestType>> => {
  * @param {string} contestId - The ID of the contest to fetch.
  * @returns {Promise<ContestType>} - A promise that resolves to the contest data.
  */
-export const fetchContest = async (contestId): Promise<ContestType> => {
+export const fetchContest = async (contestId: string): Promise<ContestType> => {
   const { data } = await axios(`${API_SERVER_URL}/contests/${contestId}`);
   return data.contest;
 };
 
+/**
+ * Add New Name to Contest
+ *
+ * Makes an API request to add a new name to a specific contest on the server.
+ *
+ * @param {string} contestId - The ID of the contest to add the name to.
+ * @param {string} newName - The new name to add to the contest.
+ * @returns {Promise<ContestType>} - A promise that resolves to the updated contest data.
+ */
 export const addNewNameToContest = async (
-  contestId,
-  newName
+  contestId: string,
+  newName: string
 ): Promise<ContestType> => {
   const { data } = await axios.post(`${API_SERVER_URL}/contests/${contestId}`, {
     name: newName,
@@ -46,7 +55,17 @@ export const addNewNameToContest = async (
   return data.updatedContest;
 };
 
-export const addNewContest = async (contest): Promise<ContestType> => {
+/**
+ * Add New Contest
+ *
+ * Makes an API request to add a new contest to the server.
+ *
+ * @param {ContestType} contest - The contest data to add.
+ * @returns {Promise<ContestType>} - A promise that resolves to the added contest data.
+ */
+export const addNewContest = async (
+  contest: ContestType
+): Promise<ContestType> => {
   const { data } = await axios.post(`${API_SERVER_URL}/contests`, contest);
 
   return data.contest;

@@ -1,3 +1,11 @@
+/**
+ * AddNewContest Component
+ *
+ * This component represents the form to add a new contest.
+ * It handles the form submission, calls the API to add the contest,
+ * and notifies the parent component of the successful addition.
+ */
+
 import React, { useState } from "react";
 import { addNewContest } from "../api-client";
 import ContestForm from "./ContestForm";
@@ -7,6 +15,12 @@ interface IAddNewContest {
   onSuccess: Function;
 }
 
+/**
+ * AddNewContest Component
+ *
+ * @param {Object} onSuccess - The function to call when a new contest is successfully added.
+ * @returns {JSX.Element} - The rendered component.
+ */
 const AddNewContest: React.FC<IAddNewContest> = ({
   onSuccess,
 }: IAddNewContest) => {

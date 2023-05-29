@@ -13,7 +13,7 @@ import { addNewNameToContest, fetchContest } from "../api-client";
 
 export type ContestType = {
   _id?: string;
-  id: string;
+  id?: string;
   categoryName: string;
   contestName: string;
   names?: Array<string>;
@@ -48,15 +48,24 @@ const Contest: React.FC = ({ initialContest, onClickContestList }) => {
    *
    * @param {Event} e - The click event.
    */
-  const handleClickContestList = (e) => {
+  const handleClickContestList = (
+    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+  ) => {
     e.preventDefault();
     onClickContestList();
   };
 
-  const handleNewNameSubmit = async (e) => {
+  /**
+   * handleNewNameSubmit
+   *
+   * Handles the submission of the new name form.
+   *
+   * @param {React.FormEvent<HTMLFormElement>} e - The form submission event.
+   */
+  const handleNewNameSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const newNameInput = e.target.newName;
+    const newNameInput = e.currentTarget.newName as HTMLInputElement;
 
     const updatedContest = await addNewNameToContest(
       contest.id,
@@ -69,16 +78,16 @@ const Contest: React.FC = ({ initialContest, onClickContestList }) => {
   };
 
   if (loading) {
-    return "Loading...";
+    return <div>Loading...</div>;
   } else {
     return (
       <>
         <Header message={contest.contestName} />
         <div className="contest">
-          <div className="title">{"Contest Description"}</div>
+          <div className="title">Contest Description</div>
           <div className="description">{contest.description}</div>
 
-          <div className="title">{"Proposed Names"}</div>
+          <div className="title">Proposed Names</div>
           <div className="body">
             {contest.names?.length > 0 ? (
               <div className="list">
@@ -89,11 +98,11 @@ const Contest: React.FC = ({ initialContest, onClickContestList }) => {
                 ))}
               </div>
             ) : (
-              <div>No names proposed yet</div>
+              <div>No names proposed</div>
             )}
           </div>
 
-          <div className="title">{"Propose a new name"}</div>
+          <div className="title">Propose a new name</div>
           <div className="body">
             <form onSubmit={handleNewNameSubmit}>
               <input
@@ -107,7 +116,7 @@ const Contest: React.FC = ({ initialContest, onClickContestList }) => {
           </div>
 
           <a href="/" onClick={handleClickContestList} className="link">
-            {"Contest List"}
+            Contest List
           </a>
         </div>
       </>

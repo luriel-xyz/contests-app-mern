@@ -1,4 +1,5 @@
 /* Set box-sizing for all elements */
+*,
 *:before,
 *:after {
   box-sizing: border-box;
@@ -9,8 +10,8 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
-  background-color: #111; /* Dark background color */
-  color: #fff; /* Light text color */
+  background-color: #111;
+  color: #fff;
 }
 
 /* Set the maximum width and margins for the container */
@@ -28,42 +29,42 @@ body {
 /* Styling for links */
 .link {
   cursor: pointer;
-  color: #007bff; /* Blue link color */
+  color: #007bff;
 }
 
 /* Styling for contest preview section */
 .contest-preview {
   margin: 1rem;
-  border: thin solid #555; /* Dark border color */
+  border: thin solid #555;
 }
 
 /* Styling for the category in contest preview */
 .contest-preview .category {
-  border-bottom: thin solid #555; /* Dark border color for bottom */
+  border-bottom: thin solid #555;
   padding: 0.5rem;
   font-weight: bold;
-  color: #ccc; /* Light text color */
-  background-color: #333; /* Dark background color */
+  color: #ccc;
+  background-color: #333;
 }
 
 /* Styling for contest details in contest preview */
 .contest-preview .contest {
-  color: #ccc; /* Light text color */
+  color: #ccc;
   padding: 0.5rem;
 }
 
 /* Styling for contest title */
 .contest .title {
-  border: thin solid #555; /* Dark border color */
+  border: thin solid #555;
   padding: 0.5rem;
   font-weight: bold;
-  background-color: #333; /* Dark background color */
+  background-color: #333;
 }
 
 /* Styling for contest description and body */
 .contest .description,
 .contest .body {
-  border: thin solid #555; /* Dark border color */
+  border: thin solid #555;
   border-top: unset;
   padding: 1rem;
   margin-bottom: 2rem;
@@ -86,10 +87,10 @@ form textarea {
   padding: 0.5rem;
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
-  border: thin solid #555; /* Dark border color */
+  border: thin solid #555;
   border-radius: 0.25rem;
-  background-color: #222; /* Dark background color */
-  color: #fff; /* Light text color */
+  background-color: #222;
+  color: #fff;
 }
 
 /* Styling for form buttons */
@@ -97,10 +98,10 @@ form button {
   padding: 0.5rem;
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
-  border: thin solid #555; /* Dark border color */
+  border: thin solid #555;
   border-radius: 0.25rem;
-  background-color: #222; /* Dark background color */
-  color: #fff; /* Light text color */
+  background-color: #222;
+  color: #fff;
 }
 
 /* Styling for adding new contest form */
@@ -116,8 +117,8 @@ form button {
 .add-new-contest textarea {
   display: block;
   margin-top: 1rem;
-  background-color: #222; /* Dark background color */
-  color: #fff; /* Light text color */
+  background-color: #222;
+  color: #fff;
 }
 
 /* Styling for links in adding new contest form */
@@ -125,5 +126,5 @@ form button {
   font-size: 1.2rem;
   margin: 2rem auto;
   text-align: center;
-  color: #007bff; /* Blue link color */
+  color: #007bff;
 }
