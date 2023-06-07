@@ -1,23 +1,22 @@
-/*
-  This file contains the Express router configuration for handling contest-related routes.
-*/
+/**
+ * This is a router file that handles various endpoints related to contests.
+ */
 
 import express, { Request, Response } from "express";
 import cors from "cors";
 import { connectClient } from "./db";
 
-// Creating an Express router
 const router = express.Router();
 
-// Applying CORS middleware
 router.use(cors());
 
-// Handling GET request for retrieving all contests
+/**
+ * GET /contests
+ * Retrieves all contests
+ */
 router.get("/contests", async (req: Request, res: Response) => {
-  // Establishing a database connection
   const client = await connectClient();
 
-  // Fetching contests from the "contests" collection and projecting only necessary fields
   const contests = await client
     .collection("contests")
     .find()
@@ -29,32 +28,32 @@ router.get("/contests", async (req: Request, res: Response) => {
     })
     .toArray();
 
-  // Sending the retrieved contests as a response
   res.send({ contests });
 });
 
-// Handling GET request for retrieving a specific contest
+/**
+ * GET /contests/:contestId
+ * Retrieves a specific contest by its ID
+ */
 router.get("/contests/:contestId", async (req: Request, res: Response) => {
-  // Extracting the contest ID from the request parameters
   const id = req.params.contestId;
 
-  // Establishing a database connection
   const client = await connectClient();
 
-  // Fetching the contest with the given ID from the "contests" collection
   const contest = await client.collection("contests").findOne({ id });
 
-  // Sending the retrieved contest as a response
   res.send({ contest });
 });
 
+/**
+ * POST /contests/:contestId
+ * Adds a name to a specific contest
+ */
 router.post("/contests/:contestId", async (req: Request, res: Response) => {
-  // Extracting the contest ID from the request parameters
   const id = req.params.contestId;
 
   const { name } = req.body;
 
-  // Establishing a database connection
   const client = await connectClient();
 
   const doc = await client.collection("contests").findOneAndUpdate(
@@ -74,8 +73,11 @@ router.post("/contests/:contestId", async (req: Request, res: Response) => {
   res.send({ updatedContest: doc.value });
 });
 
+/**
+ * POST /contests
+ * Creates a new contest
+ */
 router.post("/contests", async (req: Request, res: Response) => {
-  // Establishing a database connection
   const client = await connectClient();
 
   const { categoryName, contestName, description } = req.body;
